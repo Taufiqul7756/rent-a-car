@@ -15,8 +15,8 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <CarProvider>
           <InvoiceProvider>
-            <div className="flex flex-col min-h-screen">
-              <main className="flex-grow mt-20">{children}</main>
+            <div className="">
+              <main className="flex-grow">{children}</main>
             </div>
           </InvoiceProvider>
         </CarProvider>
