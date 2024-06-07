@@ -16,14 +16,47 @@ const InvoiceProvider = ({ children }) => {
   const [discount, setDiscount] = useState(0);
   const [reservations, setReservations] = useState([]);
 
-  // console.log("duration from context", duration);
-  console.log("reservationId from invoice context", reservationId);
-  console.log("reservation Data from invoice context", {
-    returnDate: returnDate,
-    pickupDate: pickupDate,
-    duration: duration,
-    discount: discount,
-  });
+  // Customer Details
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  // Additional Charges
+  const [collisionDamageWaiver, setCollisionDamageWaiver] = useState(false);
+  const [liabilityInsurance, setLiabilityInsurance] = useState(false);
+  const [rentalTax, setRentalTax] = useState(false);
+
+  // Log data for debugging
+  useEffect(() => {
+    console.log("reservationId from invoice context", reservationId);
+    console.log("reservation Data from invoice context", {
+      returnDate,
+      pickupDate,
+      duration,
+      discount,
+      firstName,
+      lastName,
+      email,
+      phone,
+      collisionDamageWaiver,
+      liabilityInsurance,
+      rentalTax,
+    });
+  }, [
+    reservationId,
+    pickupDate,
+    returnDate,
+    duration,
+    discount,
+    firstName,
+    lastName,
+    email,
+    phone,
+    collisionDamageWaiver,
+    liabilityInsurance,
+    rentalTax,
+  ]);
 
   //Generating reservationId Automatically
   useEffect(() => {
@@ -38,6 +71,13 @@ const InvoiceProvider = ({ children }) => {
       returnDate,
       duration,
       discount,
+      firstName,
+      lastName,
+      email,
+      phone,
+      collisionDamageWaiver,
+      liabilityInsurance,
+      rentalTax,
     };
 
     setReservations((prevReservations) => [...prevReservations, reservation]);
@@ -46,6 +86,7 @@ const InvoiceProvider = ({ children }) => {
   return (
     <InvoiceContext.Provider
       value={{
+        //reservation details
         reservationId,
         pickupDate,
         setPickupDate,
@@ -57,6 +98,24 @@ const InvoiceProvider = ({ children }) => {
         setDiscount,
         addReservation,
         reservations,
+
+        // customer details
+        firstName,
+        setFirstName,
+        lastName,
+        setLastName,
+        email,
+        setEmail,
+        phone,
+        setPhone,
+
+        //additional Charges
+        collisionDamageWaiver,
+        setCollisionDamageWaiver,
+        liabilityInsurance,
+        setLiabilityInsurance,
+        rentalTax,
+        setRentalTax,
       }}
     >
       {children}

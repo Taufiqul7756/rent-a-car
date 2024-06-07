@@ -2,7 +2,7 @@ import HomePage from "./pages/HomePage";
 
 export default function Home() {
   return (
-    <div className="bg-cyan-300">
+    <div className=" p-16">
       <HomePage />
     </div>
   );
