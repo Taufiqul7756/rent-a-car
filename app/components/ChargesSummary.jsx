@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { InvoiceContext } from "../context/InvoiceContext";
 import { CarContext } from "../context/CarContext";
 
@@ -11,6 +11,18 @@ const ChargesSummary = () => {
     rentalTax,
     duration,
     discount,
+    setWeeks,
+    setDays,
+    setTotal,
+    setTotalDailyCost,
+    setTotalWeeklyCost,
+    setCollisionDamageWaiverCost,
+    setLiabilityInsuranceCost,
+    setRentalTaxCost,
+    setDiscountAmount,
+    setDailyRate,
+    setWeeklyRate,
+    setSelectedCar,
   } = useContext(InvoiceContext);
 
   const { selectedVehicle, cars } = useContext(CarContext);
@@ -55,6 +67,35 @@ const ChargesSummary = () => {
     liabilityInsuranceCost +
     rentalTaxCost -
     discountAmount;
+
+  // Update context with calculated values
+  useEffect(() => {
+    setWeeks(weeks);
+    setDays(days);
+    setTotal(total);
+    setTotalDailyCost(totalDailyCost);
+    setTotalWeeklyCost(totalWeeklyCost);
+    setCollisionDamageWaiverCost(collisionDamageWaiverCost);
+    setLiabilityInsuranceCost(liabilityInsuranceCost);
+    setRentalTaxCost(rentalTaxCost);
+    setDiscountAmount(discountAmount);
+    setDailyRate(dailyRate);
+    setWeeklyRate(weeklyRate);
+    setSelectedCar(selectedCar);
+  }, [
+    weeks,
+    days,
+    total,
+    totalDailyCost,
+    totalWeeklyCost,
+    collisionDamageWaiverCost,
+    liabilityInsuranceCost,
+    rentalTaxCost,
+    discountAmount,
+    dailyRate,
+    weeklyRate,
+    selectedCar,
+  ]);
 
   return (
     <div className="max-w-md mx-auto p-4 shadow-md rounded-lg bg-indigo-200">

@@ -8,7 +8,7 @@ const InvoiceContext = createContext();
 
 // Create the provider component
 const InvoiceProvider = ({ children }) => {
-  //Reservation Details
+  // Reservation Details
   const [reservationId, setReservationId] = useState(uuidv4());
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
@@ -27,6 +27,22 @@ const InvoiceProvider = ({ children }) => {
   const [liabilityInsurance, setLiabilityInsurance] = useState(false);
   const [rentalTax, setRentalTax] = useState(false);
 
+  // Calculated Data
+  const [weeks, setWeeks] = useState(0);
+  const [days, setDays] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [totalDailyCost, setTotalDailyCost] = useState(0);
+  const [totalWeeklyCost, setTotalWeeklyCost] = useState(0);
+  const [collisionDamageWaiverCost, setCollisionDamageWaiverCost] = useState(0);
+  const [liabilityInsuranceCost, setLiabilityInsuranceCost] = useState(0);
+  const [rentalTaxCost, setRentalTaxCost] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
+
+  // New Data
+  const [dailyRate, setDailyRate] = useState(0);
+  const [weeklyRate, setWeeklyRate] = useState(0);
+  const [selectedCar, setSelectedCar] = useState(null);
+
   // Log data for debugging
   useEffect(() => {
     console.log("reservationId from invoice context", reservationId);
@@ -42,6 +58,18 @@ const InvoiceProvider = ({ children }) => {
       collisionDamageWaiver,
       liabilityInsurance,
       rentalTax,
+      weeks,
+      days,
+      total,
+      totalDailyCost,
+      totalWeeklyCost,
+      collisionDamageWaiverCost,
+      liabilityInsuranceCost,
+      rentalTaxCost,
+      discountAmount,
+      dailyRate,
+      weeklyRate,
+      selectedCar,
     });
   }, [
     reservationId,
@@ -56,14 +84,26 @@ const InvoiceProvider = ({ children }) => {
     collisionDamageWaiver,
     liabilityInsurance,
     rentalTax,
+    weeks,
+    days,
+    total,
+    totalDailyCost,
+    totalWeeklyCost,
+    collisionDamageWaiverCost,
+    liabilityInsuranceCost,
+    rentalTaxCost,
+    discountAmount,
+    dailyRate,
+    weeklyRate,
+    selectedCar,
   ]);
 
-  //Generating reservationId Automatically
+  // Generating reservationId Automatically
   useEffect(() => {
     setReservationId("RA# " + uuidv4());
   }, []);
 
-  //getting reservation Form Data
+  // Getting reservation Form Data
   const addReservation = () => {
     const reservation = {
       reservationId,
@@ -86,7 +126,7 @@ const InvoiceProvider = ({ children }) => {
   return (
     <InvoiceContext.Provider
       value={{
-        //reservation details
+        // reservation details
         reservationId,
         pickupDate,
         setPickupDate,
@@ -109,13 +149,41 @@ const InvoiceProvider = ({ children }) => {
         phone,
         setPhone,
 
-        //additional Charges
+        // additional charges
         collisionDamageWaiver,
         setCollisionDamageWaiver,
         liabilityInsurance,
         setLiabilityInsurance,
         rentalTax,
         setRentalTax,
+
+        // calculated data
+        weeks,
+        setWeeks,
+        days,
+        setDays,
+        total,
+        setTotal,
+        totalDailyCost,
+        setTotalDailyCost,
+        totalWeeklyCost,
+        setTotalWeeklyCost,
+        collisionDamageWaiverCost,
+        setCollisionDamageWaiverCost,
+        liabilityInsuranceCost,
+        setLiabilityInsuranceCost,
+        rentalTaxCost,
+        setRentalTaxCost,
+        discountAmount,
+        setDiscountAmount,
+
+        // new data
+        dailyRate,
+        setDailyRate,
+        weeklyRate,
+        setWeeklyRate,
+        selectedCar,
+        setSelectedCar,
       }}
     >
       {children}
