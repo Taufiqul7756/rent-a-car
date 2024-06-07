@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { InvoiceContext } from "../context/InvoiceContext";
 import { CarContext } from "../context/CarContext";
 import moment from "moment";
 import invoiceImg from "../images/invoice-img.png";
 import Image from "next/image";
 
-const Invoice = () => {
+const Invoice = React.forwardRef((props, ref) => {
   const {
     // Reservation details
     reservationId,
@@ -48,8 +48,6 @@ const Invoice = () => {
 
     selectedCar,
   } = useContext(InvoiceContext);
-  const { cars, loading, error, selectedType, selectedVehicle, models } =
-    useContext(CarContext);
 
   // State to store client-side reservationId
   const [clientReservationId, setClientReservationId] = useState(null);
@@ -59,46 +57,11 @@ const Invoice = () => {
     setClientReservationId(reservationId);
   }, [reservationId]);
 
-  console.log("invoice ", {
-    reservationId,
-    pickupDate,
-    returnDate,
-    duration,
-    discount,
-    // reservations,
-
-    // Customer details
-    firstName,
-    lastName,
-    email,
-    phone,
-
-    // Additional Charges
-    collisionDamageWaiver,
-    liabilityInsurance,
-    rentalTax,
-
-    // Calculated Charges
-    weeks,
-    days,
-    total,
-    totalDailyCost,
-    totalWeeklyCost,
-    collisionDamageWaiverCost,
-    liabilityInsuranceCost,
-    rentalTaxCost,
-    discountAmount,
-    dailyRate,
-
-    weeklyRate,
-
-    selectedCar,
-  });
   return (
-    <div>
-      <div className="p-10 text-sm">
+    <div className="border p-6" ref={ref}>
+      <div className="text-sm">
         <div className="grid grid-cols-2 gap-2">
-          {/* right div` */}
+          {/* right div */}
           <div>
             <div className="grid grid-cols-2">
               <div className="w-full flex flex-col justify-start gap-2">
@@ -283,16 +246,15 @@ const Invoice = () => {
                 Your rental agreement offers, for an additional charge, an
                 optional waiver to cover all or a part of your responsibility
                 for damage to or loss of the vehicle: Before deciding whether to
-                purchase the walver, you may wish to determine whether you own
-                automobile incsurance or credit card agreement provides to
-                coverage for rental vehicle damage or loss and determine the
-                amount of the deductible under your own insurance coverage. The
-                purchase of the waiver is ot mandator. The waiver is not
-                Insurance. I acknowledge that I have received and read a copy of
-                this
+                purchase the waiver, you may wish to determine whether your own
+                automobile insurance or credit card agreement provides coverage
+                for rental vehicle damage or loss and determine the amount of
+                the deductible under your own insurance coverage. The purchase
+                of the waiver is not mandatory. The waiver is not insurance. I
+                acknowledge that I have received and read a copy of this
               </p>
             </div>
-            <p className="pt-5">Renters Signature</p>
+            <p className="pt-5">Renter's Signature</p>
             -------------------------------------------------------------------
             <p className="mt-10">Additional Driver 1</p>
             -------------------------------------------------------------------
@@ -301,6 +263,6 @@ const Invoice = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Invoice;
