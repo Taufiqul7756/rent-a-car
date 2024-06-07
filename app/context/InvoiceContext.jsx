@@ -2,11 +2,10 @@
 
 import React, { createContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
-// Create the context
 const InvoiceContext = createContext();
 
-// Create the provider component
 const InvoiceProvider = ({ children }) => {
   // Reservation Details
   const [reservationId, setReservationId] = useState(uuidv4());
@@ -38,10 +37,10 @@ const InvoiceProvider = ({ children }) => {
   const [rentalTaxCost, setRentalTaxCost] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
 
-  // New Data
   const [dailyRate, setDailyRate] = useState(0);
   const [weeklyRate, setWeeklyRate] = useState(0);
   const [selectedCar, setSelectedCar] = useState(null);
+  const API_URL = "http://localhost:8080";
 
   // Log data for debugging
   useEffect(() => {
@@ -176,8 +175,6 @@ const InvoiceProvider = ({ children }) => {
         setRentalTaxCost,
         discountAmount,
         setDiscountAmount,
-
-        // new data
         dailyRate,
         setDailyRate,
         weeklyRate,
