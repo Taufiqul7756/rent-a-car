@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { InvoiceContext } from "../context/InvoiceContext";
 import { CarContext } from "../context/CarContext";
 import moment from "moment";
+import invoiceImg from "../images/invoice-img.png";
+import Image from "next/image";
 
 const Invoice = () => {
   const {
@@ -49,6 +51,14 @@ const Invoice = () => {
   const { cars, loading, error, selectedType, selectedVehicle, models } =
     useContext(CarContext);
 
+  // State to store client-side reservationId
+  const [clientReservationId, setClientReservationId] = useState(null);
+
+  useEffect(() => {
+    // Set the clientReservationId to match server-rendered reservationId
+    setClientReservationId(reservationId);
+  }, [reservationId]);
+
   console.log("invoice ", {
     reservationId,
     pickupDate,
@@ -91,13 +101,10 @@ const Invoice = () => {
           {/* right div` */}
           <div>
             <div className="grid grid-cols-2">
-              {/* logo with user & company info  */}
-              <div className="w-full flex flex-col justify-center items-center gap-4">
-                {/* <div>
-                  <img src={logo} alt="" className="w-32" />
-                </div> */}
-                <div className="w-full">
-                  <h1>RENTER INFO</h1>
+              <div className="w-full flex flex-col justify-start gap-2">
+                <Image src={invoiceImg} width={200} height={200} />
+                <div className="w-full ">
+                  <h1 className="font-bold text-lg">RENTER INFO</h1>
                   <p className="font-bold capitalize ">
                     {firstName + " " + lastName}
                   </p>
@@ -106,13 +113,13 @@ const Invoice = () => {
                 </div>
               </div>
               <div className="space-y-3">
-                <div>
+                <div className="font-bold">
                   <p>CH Car Place Inc</p>
                   <p>162 Bergen st</p>
                   <p>Brooklyn, NY 112113</p>
                   <p>PH#</p>
                 </div>
-                <div>
+                <div className="">
                   Monday 9:00 AM - 6:00 PM <br />
                   Tuesday 9:00 AM - 6:00 PM <br />
                   Wednesday 9:00 AM - 6:00 PM <br />
@@ -127,9 +134,15 @@ const Invoice = () => {
               <h1 className="text-lg font-bold my-3">
                 ADDITIONAL AUTHORIZED DRIVER(S)
               </h1>
-              <h1 className="text-base font-bold">UNIT DETAILS</h1>
-              <p>Unit : </p>
-              <p>Make & Model : </p>
+              <h1 className="text-base font-bold mb-2">UNIT DETAILS</h1>
+              <p>
+                <span className="font-bold">Unit :</span>{" "}
+                {selectedCar?.type || "N/A"}
+              </p>
+              <p>
+                <span className="font-bold">Make & Model :</span>{" "}
+                {selectedCar?.make || "N/A"} & {selectedCar?.model || "N/A"}{" "}
+              </p>
 
               <div className="py-5">
                 <p>BILL TO :</p>
@@ -139,7 +152,10 @@ const Invoice = () => {
 
               <div>
                 <p>Referral:</p>
-                <p>NOTICE: Collision Insurance (CDW) - $7 per day</p>
+                <p>
+                  <span className="font-bold">NOTICE:</span> Collision Insurance
+                  (CDW) - $7 per day
+                </p>
                 <p>
                   Limits liability of damages to one's own vehicle up to $1000
                   in event of an accident, by waiving this coverage renter
@@ -147,9 +163,13 @@ const Invoice = () => {
                   the vehicle
                 </p>
               </div>
-              <div className="grid grid-cols-2 my-5 text-center">
-                <p>Accept</p>
-                <p>Reject</p>
+              <div className="flex justify-around items-center my-5 ">
+                <p className="bg-gray-400 py-2 p-4 rounded cursor-pointer hover:bg-slate-400">
+                  Accept
+                </p>
+                <p className="bg-gray-400 py-2 p-4 rounded cursor-pointer hover:bg-slate-400">
+                  Reject
+                </p>
               </div>
               <p>
                 Rental service may be refused anyone when done in the best
@@ -161,18 +181,22 @@ const Invoice = () => {
           </div>
           {/* left  */}
           <div>
-            <div>
-              <h1 className="text-2xl font-bold">Reservation</h1>
-              <h1 className="text-lg font-bold">{reservationId}</h1>
+            <div className="mb-5">
+              <h1 className="text-3xl font-bold">Reservation</h1>
+              <h1 className="text-lg font-bold my-3">{clientReservationId}</h1>
               <p>REPAIR ORDER:</p>
               <p>CLAIM:</p>
               <p>
                 Date/Time Out:{" "}
-                {moment(new Date(pickupDate)).format("MM/DD/YYYY, h:mm a")}
+                <span className="font-bold">
+                  {moment(new Date(pickupDate)).format("MM/DD/YYYY, h:mm a")}
+                </span>
               </p>
               <p>
                 Date/Time In:{" "}
-                {moment(new Date(returnDate)).format("MM/DD/YYYY, h:mm a")}
+                <span className="font-bold">
+                  {moment(new Date(returnDate)).format("MM/DD/YYYY, h:mm a")}
+                </span>
               </p>
             </div>
             {/* summary */}
@@ -268,10 +292,10 @@ const Invoice = () => {
                 this
               </p>
             </div>
-            <p>Renters Signature</p>
-            -------------------------------------------
+            <p className="pt-5">Renters Signature</p>
+            -------------------------------------------------------------------
             <p className="mt-10">Additional Driver 1</p>
-            -------------------------------------------
+            -------------------------------------------------------------------
           </div>
         </div>
       </div>
