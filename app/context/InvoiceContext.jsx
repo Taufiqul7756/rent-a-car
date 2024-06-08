@@ -2,7 +2,6 @@
 
 import React, { createContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
 
 const InvoiceContext = createContext();
 
@@ -40,7 +39,6 @@ const InvoiceProvider = ({ children }) => {
   const [dailyRate, setDailyRate] = useState(0);
   const [weeklyRate, setWeeklyRate] = useState(0);
   const [selectedCar, setSelectedCar] = useState(null);
-  const API_URL = "http://localhost:8080";
 
   // Log data for debugging
   useEffect(() => {
