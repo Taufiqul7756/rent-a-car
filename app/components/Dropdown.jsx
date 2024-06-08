@@ -42,9 +42,9 @@ const Dropdown = ({ value, options, onChange, renderOption, placeholder }) => {
       </div>
       {isOpen && (
         <div className="absolute w-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto z-10">
-          {options.map((option) => (
+          {options.map((option, index) => (
             <div
-              key={option.id}
+              key={index}
               className="px-3 py-2 cursor-pointer hover:bg-indigo-100"
               onClick={() => handleOptionClick(option)}
             >

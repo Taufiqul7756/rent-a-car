@@ -2,7 +2,7 @@
 
 import React, { useContext } from "react";
 import { CarContext } from "../context/CarContext";
-
+import Dropdown from "./Dropdown";
 const VehicleInformation = () => {
   const {
     loading,
@@ -19,41 +19,43 @@ const VehicleInformation = () => {
 
   const selectedCar = models.find((car) => car.id === selectedVehicle);
 
+  const renderVehicleTypeOption = (option) => option;
+  const renderVehicleOption = (option) => (
+    <div className="flex items-center">
+      <img
+        src={option.imageURL}
+        alt={`${option.make} ${option.model}`}
+        className="w-8 h-8 mr-2 rounded-full"
+      />
+      <span>{`${option.make} ${option.model}`}</span>
+    </div>
+  );
+
   return (
     <div className="max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Vehicle Type:
         </label>
-        <select
+        <Dropdown
           value={selectedType}
-          onChange={(e) => setSelectedType(e.target.value)}
-          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-indigo-500"
-        >
-          <option value="">Select a vehicle type</option>
-          {uniqueVehicleTypes.map((type, index) => (
-            <option key={index} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
+          options={uniqueVehicleTypes}
+          onChange={(option) => setSelectedType(option)}
+          renderOption={renderVehicleTypeOption}
+          placeholder="Select a vehicle type"
+        />
       </div>
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Vehicle:
         </label>
-        <select
-          value={selectedVehicle}
-          onChange={(e) => setSelectedVehicle(e.target.value)}
-          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-indigo-500"
-        >
-          <option value="">Select a vehicle</option>
-          {models.map((car) => (
-            <option key={car.id} value={car.id}>
-              {car.make} {car.model}
-            </option>
-          ))}
-        </select>
+        <Dropdown
+          value={selectedCar}
+          options={models}
+          onChange={(option) => setSelectedVehicle(option.id)}
+          renderOption={renderVehicleOption}
+          placeholder="Select a vehicle"
+        />
       </div>
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
@@ -90,4 +92,5 @@ const VehicleInformation = () => {
     </div>
   );
 };
+
 export default VehicleInformation;
