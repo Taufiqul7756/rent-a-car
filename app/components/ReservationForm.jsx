@@ -16,8 +16,6 @@ const ReservationForm = () => {
     addReservation,
   } = useContext(InvoiceContext);
 
-  console.log("reservationId from page", reservationId);
-
   const calculateDuration = (start, end) => {
     const startDate = new Date(start);
     const endDate = new Date(end);

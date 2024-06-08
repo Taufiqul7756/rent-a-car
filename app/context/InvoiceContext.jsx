@@ -2,7 +2,6 @@
 
 import React, { createContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
 
 const InvoiceContext = createContext();
 
@@ -38,60 +37,6 @@ const InvoiceProvider = ({ children }) => {
   const [weeklyRate, setWeeklyRate] = useState(0);
   const [selectedCar, setSelectedCar] = useState(null);
 
-  // Log data for debugging
-  useEffect(() => {
-    console.log("reservationId from invoice context", reservationId);
-    console.log("reservation Data from invoice context", {
-      returnDate,
-      pickupDate,
-      duration,
-      discount,
-      firstName,
-      lastName,
-      email,
-      phone,
-      collisionDamageWaiver,
-      liabilityInsurance,
-      rentalTax,
-      weeks,
-      days,
-      total,
-      totalDailyCost,
-      totalWeeklyCost,
-      collisionDamageWaiverCost,
-      liabilityInsuranceCost,
-      rentalTaxCost,
-      discountAmount,
-      dailyRate,
-      weeklyRate,
-      selectedCar,
-    });
-  }, [
-    reservationId,
-    pickupDate,
-    returnDate,
-    duration,
-    discount,
-    firstName,
-    lastName,
-    email,
-    phone,
-    collisionDamageWaiver,
-    liabilityInsurance,
-    rentalTax,
-    weeks,
-    days,
-    total,
-    totalDailyCost,
-    totalWeeklyCost,
-    collisionDamageWaiverCost,
-    liabilityInsuranceCost,
-    rentalTaxCost,
-    discountAmount,
-    dailyRate,
-    weeklyRate,
-    selectedCar,
-  ]);
   // Generating reservationId Automatically
   useEffect(() => {
     setReservationId("RA#" + uuidv4());
@@ -114,6 +59,7 @@ const InvoiceProvider = ({ children }) => {
     };
     setReservations((prevReservations) => [...prevReservations, reservation]);
   };
+
   return (
     <InvoiceContext.Provider
       value={{

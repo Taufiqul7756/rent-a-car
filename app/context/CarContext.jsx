@@ -17,7 +17,7 @@ const CarProvider = ({ children }) => {
     const loadCars = async () => {
       try {
         const result = await fetchCars();
-        console.log("Car data", result);
+        // console.log("Car data", result);
 
         if (result.status === "success") {
           setCars(result.data);

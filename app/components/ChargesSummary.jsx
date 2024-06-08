@@ -140,7 +140,7 @@ const ChargesSummary = () => {
             };
 
             await axios.post("/invoice", invoiceData);
-            console.log("Invoice saved:", invoiceData);
+            console.log("Invoice saved....");
           } else {
             console.error("Duplicate reservationId, invoice not saved");
           }
@@ -167,36 +167,6 @@ const ChargesSummary = () => {
     weeklyRate,
     selectedCar,
   ]);
-  console.log("Charges summary logs:", {
-    reservationId,
-    pickupDate,
-    returnDate,
-
-    total,
-    discountAmount,
-    collisionDamageWaiverCost,
-    liabilityInsuranceCost,
-    rentalTaxCost,
-    totalDailyCost,
-    totalWeeklyCost,
-    dailyRate,
-    weeklyRate,
-    selectedCar,
-    weeks,
-    days,
-    collisionDamageWaiver,
-    liabilityInsurance,
-    rentalTax,
-    duration,
-    discount,
-    // customer details
-    firstName,
-    lastName,
-    email,
-    phone,
-  });
-
-  console.log("Selected Car:", selectedCar);
 
   return (
     <div className="max-w-md mx-auto p-4 shadow-md rounded-lg bg-indigo-200">

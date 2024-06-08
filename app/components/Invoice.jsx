@@ -2,7 +2,6 @@
 
 import React, { useContext, useState, useEffect } from "react";
 import { InvoiceContext } from "../context/InvoiceContext";
-import { CarContext } from "../context/CarContext";
 import moment from "moment";
 import invoiceImg from "../images/invoice-img.png";
 import Image from "next/image";
@@ -15,8 +14,6 @@ const Invoice = React.forwardRef((props, ref) => {
     returnDate,
     duration,
     discount,
-    addReservation,
-    reservations,
 
     // Customer details
     firstName,
@@ -28,13 +25,10 @@ const Invoice = React.forwardRef((props, ref) => {
     collisionDamageWaiver,
     liabilityInsurance,
     rentalTax,
-    setRentalTax,
 
     // Calculated Charges
     weeks,
-    setWeeks,
     days,
-    setDays,
     total,
     totalDailyCost,
     totalWeeklyCost,
@@ -43,47 +37,9 @@ const Invoice = React.forwardRef((props, ref) => {
     rentalTaxCost,
     discountAmount,
     dailyRate,
-
     weeklyRate,
-
     selectedCar,
   } = useContext(InvoiceContext);
-
-  console.log("invoice ", {
-    reservationId,
-    pickupDate,
-    returnDate,
-    duration,
-    discount,
-    // reservations,
-
-    // Customer details
-    firstName,
-    lastName,
-    email,
-    phone,
-
-    // Additional Charges
-    collisionDamageWaiver,
-    liabilityInsurance,
-    rentalTax,
-
-    // Calculated Charges
-    weeks,
-    days,
-    total,
-    totalDailyCost,
-    totalWeeklyCost,
-    collisionDamageWaiverCost,
-    liabilityInsuranceCost,
-    rentalTaxCost,
-    discountAmount,
-    dailyRate,
-
-    weeklyRate,
-
-    selectedCar,
-  });
 
   // State to store client-side reservationId
   const [clientReservationId, setClientReservationId] = useState(null);
@@ -95,9 +51,9 @@ const Invoice = React.forwardRef((props, ref) => {
 
   return (
     <div className="border p-6" ref={ref}>
-      <div className="text-sm">
+      <div className="text-sm sm:text-base md:text-sm lg:text-base xl:text-lg">
         <div className="grid grid-cols-2 gap-2">
-          {/* right div */}
+          {/* right column */}
           <div>
             <div className="grid grid-cols-2">
               <div className="w-full flex flex-col justify-start gap-2">
@@ -179,7 +135,7 @@ const Invoice = React.forwardRef((props, ref) => {
               </p>
             </div>
           </div>
-          {/* left  */}
+          {/* left column */}
           <div>
             <div className="mb-5">
               <h1 className="text-3xl font-bold">Reservation</h1>
@@ -216,6 +172,15 @@ const Invoice = React.forwardRef((props, ref) => {
                   <div className="col-span-2 text-center">{dailyRate}</div>
                   <div className="col-span-2 text-center">
                     ${totalDailyCost.toFixed(2)}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-1 items-center">
+                  <div className="col-span-6">Weekly</div>
+                  <div className="col-span-2 text-center">{weeks}</div>
+                  <div className="col-span-2 text-center">{weeklyRate}</div>
+                  <div className="col-span-2 text-center">
+                    ${totalWeeklyCost.toFixed(2)}
                   </div>
                 </div>
 
