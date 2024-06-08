@@ -3,9 +3,13 @@
 import React, { useContext, useEffect } from "react";
 import { InvoiceContext } from "../context/InvoiceContext";
 import { CarContext } from "../context/CarContext";
+import axios from "../utils/axios";
 
 const ChargesSummary = () => {
   const {
+    reservationId,
+    pickupDate,
+    returnDate,
     collisionDamageWaiver,
     liabilityInsurance,
     rentalTax,
@@ -23,6 +27,11 @@ const ChargesSummary = () => {
     setDailyRate,
     setWeeklyRate,
     setSelectedCar,
+    // customer details
+    firstName,
+    lastName,
+    email,
+    phone,
   } = useContext(InvoiceContext);
 
   const { selectedVehicle, cars } = useContext(CarContext);
@@ -68,6 +77,11 @@ const ChargesSummary = () => {
     rentalTaxCost -
     discountAmount;
 
+  // Validation function to check if all required fields are present
+  const isDataValid = () => {
+    return reservationId && firstName && lastName && selectedCar && total > 0;
+  };
+
   useEffect(() => {
     setWeeks(weeks);
     setDays(days);
@@ -81,6 +95,64 @@ const ChargesSummary = () => {
     setDailyRate(dailyRate);
     setWeeklyRate(weeklyRate);
     setSelectedCar(selectedCar);
+
+    if (isDataValid()) {
+      const checkReservationId = async () => {
+        try {
+          const response = await axios.get(`/invoice/${reservationId}`);
+          if (!response.data.exists) {
+            const invoiceData = {
+              reservationId,
+              pickupDate,
+              returnDate,
+              total,
+              discountAmount,
+              collisionDamageWaiver,
+              collisionDamageWaiverCost,
+              dailyRate,
+              days,
+              discount,
+              duration,
+              email,
+              firstName,
+              lastName,
+              liabilityInsurance,
+              liabilityInsuranceCost,
+              phone,
+              rentalTax,
+              rentalTaxCost,
+              // selectedCar: {
+              //   id: selectedCar.id,
+              //   make: selectedCar.make,
+              //   model: selectedCar.model,
+              //   year: selectedCar.year,
+              //   type: selectedCar.type,
+              //   seats: selectedCar.seats,
+              //   bags: selectedCar.bags,
+              //   imageURL: selectedCar.imageURL,
+              //   features: selectedCar.features,
+              //   rates: selectedCar.rates,
+              // },
+              totalDailyCost,
+              totalWeeklyCost,
+              weeklyRate,
+              weeks,
+            };
+
+            await axios.post("/invoice", invoiceData);
+            console.log("Invoice saved:", invoiceData);
+          } else {
+            console.error("Duplicate reservationId, invoice not saved");
+          }
+        } catch (error) {
+          console.error("Error checking or saving invoice:", error);
+        }
+      };
+
+      checkReservationId();
+    } else {
+      console.error("Incomplete data, invoice not saved");
+    }
   }, [
     weeks,
     days,
@@ -95,8 +167,11 @@ const ChargesSummary = () => {
     weeklyRate,
     selectedCar,
   ]);
-
   console.log("Charges summary logs:", {
+    reservationId,
+    pickupDate,
+    returnDate,
+
     total,
     discountAmount,
     collisionDamageWaiverCost,
@@ -114,7 +189,14 @@ const ChargesSummary = () => {
     rentalTax,
     duration,
     discount,
+    // customer details
+    firstName,
+    lastName,
+    email,
+    phone,
   });
+
+  console.log("Selected Car:", selectedCar);
 
   return (
     <div className="max-w-md mx-auto p-4 shadow-md rounded-lg bg-indigo-200">

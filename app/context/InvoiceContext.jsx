@@ -2,6 +2,7 @@
 
 import React, { createContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 const InvoiceContext = createContext();
 
@@ -13,18 +14,15 @@ const InvoiceProvider = ({ children }) => {
   const [duration, setDuration] = useState(0);
   const [discount, setDiscount] = useState(0);
   const [reservations, setReservations] = useState([]);
-
   // Customer Details
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-
   // Additional Charges
   const [collisionDamageWaiver, setCollisionDamageWaiver] = useState(false);
   const [liabilityInsurance, setLiabilityInsurance] = useState(false);
   const [rentalTax, setRentalTax] = useState(false);
-
   // Calculated Data
   const [weeks, setWeeks] = useState(0);
   const [days, setDays] = useState(0);
@@ -94,12 +92,10 @@ const InvoiceProvider = ({ children }) => {
     weeklyRate,
     selectedCar,
   ]);
-
   // Generating reservationId Automatically
   useEffect(() => {
-    setReservationId("RA# " + uuidv4());
+    setReservationId("RA#" + uuidv4());
   }, []);
-
   // Getting reservation Form Data
   const addReservation = () => {
     const reservation = {
@@ -116,10 +112,8 @@ const InvoiceProvider = ({ children }) => {
       liabilityInsurance,
       rentalTax,
     };
-
     setReservations((prevReservations) => [...prevReservations, reservation]);
   };
-
   return (
     <InvoiceContext.Provider
       value={{
@@ -135,7 +129,6 @@ const InvoiceProvider = ({ children }) => {
         setDiscount,
         addReservation,
         reservations,
-
         // customer details
         firstName,
         setFirstName,
@@ -145,7 +138,6 @@ const InvoiceProvider = ({ children }) => {
         setEmail,
         phone,
         setPhone,
-
         // additional charges
         collisionDamageWaiver,
         setCollisionDamageWaiver,
@@ -153,7 +145,6 @@ const InvoiceProvider = ({ children }) => {
         setLiabilityInsurance,
         rentalTax,
         setRentalTax,
-
         // calculated data
         weeks,
         setWeeks,
