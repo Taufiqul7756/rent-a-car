@@ -100,11 +100,12 @@ const Invoice = React.forwardRef((props, ref) => {
               <h1 className="text-base font-bold mb-2">UNIT DETAILS</h1>
               <p>
                 <span className="font-bold">Unit :</span>{" "}
-                {selectedCar?.type || "N/A"}
+                {selectedCar?.type || "Sedan"}
               </p>
               <p>
                 <span className="font-bold">Make & Model :</span>{" "}
-                {selectedCar?.make || "N/A"} & {selectedCar?.model || "N/A"}{" "}
+                {selectedCar?.make || "Toyota"} &{" "}
+                {selectedCar?.model || "Camry"}{" "}
               </p>
 
               <div className="py-5">

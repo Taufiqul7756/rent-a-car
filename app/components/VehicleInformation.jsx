@@ -3,6 +3,7 @@
 import React, { useContext, useEffect } from "react";
 import { CarContext } from "../context/CarContext";
 import Dropdown from "./Dropdown";
+import { InvoiceContext } from "../context/InvoiceContext";
 
 const VehicleInformation = () => {
   const {
@@ -16,6 +17,8 @@ const VehicleInformation = () => {
     models,
   } = useContext(CarContext);
 
+  const { setSelectedCar } = useContext(InvoiceContext);
+
   const uniqueVehicleTypes = [...new Set(cars.map((car) => car.type))];
 
   // Filter models based on the selected type
@@ -28,6 +31,7 @@ const VehicleInformation = () => {
 
   const handleVehicleChange = (car) => {
     setSelectedVehicle(car);
+    setSelectedCar(car);
   };
 
   return (
