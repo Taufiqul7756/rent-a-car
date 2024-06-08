@@ -68,7 +68,6 @@ const ChargesSummary = () => {
     rentalTaxCost -
     discountAmount;
 
-  // Update context with calculated values
   useEffect(() => {
     setWeeks(weeks);
     setDays(days);
@@ -97,6 +96,26 @@ const ChargesSummary = () => {
     selectedCar,
   ]);
 
+  console.log("Charges summary logs:", {
+    total,
+    discountAmount,
+    collisionDamageWaiverCost,
+    liabilityInsuranceCost,
+    rentalTaxCost,
+    totalDailyCost,
+    totalWeeklyCost,
+    dailyRate,
+    weeklyRate,
+    selectedCar,
+    weeks,
+    days,
+    collisionDamageWaiver,
+    liabilityInsurance,
+    rentalTax,
+    duration,
+    discount,
+  });
+
   return (
     <div className="max-w-md mx-auto p-4 shadow-md rounded-lg bg-indigo-200">
       <table className="w-full text-left table-auto">
@@ -122,7 +141,7 @@ const ChargesSummary = () => {
           {days > 0 && (
             <tr>
               <td className="border px-4 py-2">Daily</td>
-              <td className="border px-4 py-2">{days} </td>
+              <td className="border px-4 py-2">{days}</td>
               <td className="border px-4 py-2">${dailyRate}</td>
               <td className="border px-4 py-2">${totalDailyCost.toFixed(2)}</td>
             </tr>

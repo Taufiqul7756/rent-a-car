@@ -49,6 +49,42 @@ const Invoice = React.forwardRef((props, ref) => {
     selectedCar,
   } = useContext(InvoiceContext);
 
+  console.log("invoice ", {
+    reservationId,
+    pickupDate,
+    returnDate,
+    duration,
+    discount,
+    // reservations,
+
+    // Customer details
+    firstName,
+    lastName,
+    email,
+    phone,
+
+    // Additional Charges
+    collisionDamageWaiver,
+    liabilityInsurance,
+    rentalTax,
+
+    // Calculated Charges
+    weeks,
+    days,
+    total,
+    totalDailyCost,
+    totalWeeklyCost,
+    collisionDamageWaiverCost,
+    liabilityInsuranceCost,
+    rentalTaxCost,
+    discountAmount,
+    dailyRate,
+
+    weeklyRate,
+
+    selectedCar,
+  });
+
   // State to store client-side reservationId
   const [clientReservationId, setClientReservationId] = useState(null);
 
