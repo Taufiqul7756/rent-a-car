@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { InvoiceContext } from "../context/InvoiceContext";
 
 const ReservationForm = () => {
@@ -15,6 +15,7 @@ const ReservationForm = () => {
     setDiscount,
     addReservation,
   } = useContext(InvoiceContext);
+  const [discountError, setDiscountError] = useState("");
 
   const calculateDuration = (start, end) => {
     const startDate = new Date(start);
@@ -41,6 +42,17 @@ const ReservationForm = () => {
       addReservation();
     }
   }, [reservationId, pickupDate, returnDate, duration, discount]);
+
+  const handleDiscountChange = (e) => {
+    const value = parseFloat(e.target.value);
+    if (value < 0) {
+      setDiscountError("Discount cannot be negative");
+      setDiscount(0);
+    } else {
+      setDiscountError("");
+      setDiscount(value);
+    }
+  };
 
   return (
     <form className="max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">
@@ -97,10 +109,13 @@ const ReservationForm = () => {
         <input
           type="number"
           value={discount}
-          onChange={(e) => setDiscount(e.target.value)}
+          onChange={handleDiscountChange}
           required
           className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-indigo-500"
         />
+        {discountError && (
+          <p className="text-red-500 text-xs mt-1">{discountError}</p>
+        )}
       </div>
     </form>
   );
