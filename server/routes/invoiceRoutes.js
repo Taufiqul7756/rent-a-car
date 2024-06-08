@@ -26,7 +26,7 @@ router.get("/invoice/:reservationId", async (req, res) => {
 });
 
 // GET endpoint to check if a reservationId exists
-router.get("/invoice/:reservationId", async (req, res) => {
+router.get("/single-invoice/:reservationId", async (req, res) => {
   const { reservationId } = req.params;
   try {
     const invoice = await Invoice.findOne({ reservationId });
