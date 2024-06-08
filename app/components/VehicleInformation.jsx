@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CarContext } from "../context/CarContext";
 import Dropdown from "./Dropdown";
 
@@ -17,6 +17,14 @@ const VehicleInformation = () => {
   } = useContext(CarContext);
 
   const uniqueVehicleTypes = [...new Set(cars.map((car) => car.type))];
+
+  // Filter models based on the selected type
+  const filteredModels = models.filter((car) => car.type === selectedType);
+
+  // Reset selectedVehicle when selectedType changes
+  useEffect(() => {
+    setSelectedVehicle(null);
+  }, [selectedType, setSelectedVehicle]);
 
   const handleVehicleChange = (car) => {
     setSelectedVehicle(car);
@@ -42,17 +50,16 @@ const VehicleInformation = () => {
         </label>
         <Dropdown
           value={selectedVehicle}
-          options={models}
+          options={filteredModels}
           onChange={handleVehicleChange}
-          placeholder="Select a vehicle "
+          placeholder="Select a vehicle"
           renderOption={(car) => (
-            <div className="flex items-center ">
+            <div className="flex items-center">
               <img
                 src={car.imageURL}
                 alt={`${car.make} ${car.model}`}
-                className="w-8 h-8 object-cover mr-2  "
+                className="w-8 h-8 object-cover mr-2"
               />
-
               <span>
                 {car.make} {car.model}
               </span>

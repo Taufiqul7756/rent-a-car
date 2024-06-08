@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 
 const Dropdown = ({ value, options, onChange, renderOption, placeholder }) => {
